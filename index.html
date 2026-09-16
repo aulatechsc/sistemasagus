@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistemas — Colegio San Carlos</title>
+<meta name="description" content="Panel de acceso rápido a las aplicaciones del Colegio San Carlos.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f172a'/><text x='50' y='70' font-size='58' font-family='Georgia,serif' font-weight='bold' text-anchor='middle' fill='%2338bdf8'>SC</text></svg>">
+<style>
+  :root {
+    --navy-900: #0b1220;
+    --navy-800: #101a2e;
+    --navy-700: #16233d;
+    --navy-600: #1e2f4d;
+    --borde:    #24374f;
+    --texto:    #e8eef7;
+    --texto-2:  #9fb0c8;
+    --acento:   #38bdf8;
+    --acento-2: #0ea5e9;
+
+    --ok-bg: #0f3a2b;  --ok-fg: #6ee7b7;  --ok-bd: #1d6b4f;
+    --rev-bg:#4a3708;  --rev-fg:#fcd34d;  --rev-bd:#8a6410;
+    --arc-bg:#33303a;  --arc-fg:#c4bdd1;  --arc-bd:#524c5c;
+
+    --radio: 12px;
+    --sombra: 0 1px 2px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.22);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--navy-900);
+    color: var(--texto);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .contenedor {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* ---------- Header ---------- */
+  header.principal {
+    background: linear-gradient(180deg, var(--navy-800), var(--navy-900));
+    border-bottom: 1px solid var(--borde);
+    padding: 28px 0 24px;
+  }
+  .marca {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .logo {
+    width: 46px; height: 46px;
+    flex: 0 0 auto;
+    display: grid; place-items: center;
+    background: var(--navy-600);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    color: var(--acento);
+    font-weight: 700;
+    font-family: Georgia, "Times New Roman", serif;
+    letter-spacing: .5px;
+  }
+  header.principal h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    font-weight: 650;
+    letter-spacing: -.01em;
+  }
+  .subtitulo {
+    margin: 2px 0 0;
+    color: var(--texto-2);
+    font-size: .9rem;
+  }
+  .meta {
+    margin-top: 18px;
+    display: flex;
+    gap: 10px 18px;
+    flex-wrap: wrap;
+    align-items: center;
+    color: var(--texto-2);
+    font-size: .82rem;
+  }
+  .meta strong { color: var(--texto); font-weight: 600; }
+
+  /* ---------- Búsqueda ---------- */
+  .barra-busqueda {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(11,18,32,.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--borde);
+    padding: 12px 0;
+  }
+  .campo {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .campo svg {
+    position: absolute;
+    left: 14px;
+    width: 18px; height: 18px;
+    fill: none;
+    stroke: var(--texto-2);
+    stroke-width: 2;
+    pointer-events: none;
+  }
+  #buscador {
+    width: 100%;
+    padding: 12px 44px 12px 42px;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--texto);
+    background: var(--navy-800);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  #buscador::placeholder { color: var(--texto-2); }
+  #buscador:focus {
+    border-color: var(--acento-2);
+    box-shadow: 0 0 0 3px rgba(14,165,233,.22);
+  }
+  #limpiar {
+    position: absolute;
+    right: 8px;
+    width: 30px; height: 30px;
+    display: none;
+    place-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    color: var(--texto-2);
+    font-size: 1.15rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  #limpiar:hover { background: var(--navy-600); color: var(--texto); }
+  #limpiar.visible { display: grid; }
+  #contador {
+    margin-top: 8px;
+    min-height: 1.1em;
+    color: var(--texto-2);
+    font-size: .8rem;
+  }
+
+  /* ---------- Secciones ---------- */
+  main { padding: 8px 0 56px; }
+
+  .seccion {
+    margin-top: 22px;
+    background: var(--navy-800);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    overflow: hidden;
+  }
+  .seccion > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 1.02rem;
+    user-select: none;
+  }
+  .seccion > summary::-webkit-details-marker { display: none; }
+  .seccion > summary:hover { background: var(--navy-700); }
+  .seccion > summary:focus-visible {
+    outline: 2px solid var(--acento);
+    outline-offset: -2px;
+  }
+  .flecha {
+    flex: 0 0 auto;
+    width: 10px; height: 10px;
+    border-right: 2px solid var(--texto-2);
+    border-bottom: 2px solid var(--texto-2);
+    transform: rotate(-45deg);
+    transition: transform .18s ease;
+    margin-left: 2px;
+  }
+  .seccion[open] > summary .flecha { transform: rotate(45deg); }
+  .cuenta {
+    margin-left: auto;
+    padding: 2px 9px;
+    background: var(--navy-600);
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    color: var(--texto-2);
+    font-size: .74rem;
+    font-weight: 600;
+  }
+
+  .grilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    padding: 4px 18px 20px;
+  }
+
+  /* ---------- Tarjetas ---------- */
+  .tarjeta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    background: var(--navy-700);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    box-shadow: var(--sombra);
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .tarjeta:hover {
+    transform: translateY(-2px);
+    border-color: var(--navy-600);
+  }
+  .tarjeta h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 620;
+    line-height: 1.3;
+  }
+  .tarjeta p {
+    margin: 0;
+    flex: 1 1 auto;
+    color: var(--texto-2);
+    font-size: .86rem;
+  }
+  .etiqueta {
+    align-self: flex-start;
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+  }
+  .etiqueta.activo      { background: var(--ok-bg);  color: var(--ok-fg);  border-color: var(--ok-bd); }
+  .etiqueta.revision    { background: var(--rev-bg); color: var(--rev-fg); border-color: var(--rev-bd); }
+  .etiqueta.archivado   { background: var(--arc-bg); color: var(--arc-fg); border-color: var(--arc-bd); }
+
+  .abrir {
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 9px 14px;
+    background: var(--acento-2);
+    color: #05121f;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    font-size: .88rem;
+    font-weight: 650;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .abrir:hover { background: var(--acento); }
+  .abrir:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+  .abrir.pendiente {
+    background: transparent;
+    color: var(--texto-2);
+    border-color: var(--borde);
+    cursor: not-allowed;
+  }
+  .abrir .icono { font-size: .95em; line-height: 1; }
+
+  /* ---------- Estados vacíos / error ---------- */
+  .aviso {
+    margin-top: 22px;
+    padding: 20px;
+    background: var(--navy-800);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    color: var(--texto-2);
+    font-size: .9rem;
+  }
+  .aviso strong { color: var(--texto); }
+  .aviso code {
+    padding: 1px 5px;
+    background: var(--navy-600);
+    border-radius: 5px;
+    font-size: .92em;
+  }
+  .oculto { display: none !important; }
+
+  footer.principal {
+    border-top: 1px solid var(--borde);
+    padding: 20px 0 32px;
+    color: var(--texto-2);
+    font-size: .8rem;
+  }
+
+  @media (max-width: 480px) {
+    header.principal { padding: 20px 0 18px; }
+    header.principal h1 { font-size: 1.25rem; }
+    .grilla { grid-template-columns: 1fr; padding: 4px 14px 18px; }
+    .seccion > summary { padding: 13px 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="principal">
+  <div class="contenedor">
+    <div class="marca">
+      <div class="logo" aria-hidden="true">SC</div>
+      <div>
+        <h1>Sistemas — Colegio San Carlos</h1>
+        <p class="subtitulo">Panel de acceso rápido a las aplicaciones del colegio</p>
+      </div>
+    </div>
+    <div class="meta">
+      <span>Última actualización: <strong id="fecha-actualizacion">—</strong></span>
+      <span id="total-proyectos"></span>
+    </div>
+  </div>
+</header>
+
+<div class="barra-busqueda">
+  <div class="contenedor">
+    <div class="campo">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="16.5" y1="16.5" x2="21" y2="21" stroke-linecap="round"></line>
+      </svg>
+      <label class="oculto" for="buscador">Buscar proyecto por nombre</label>
+      <input id="buscador" type="search" autocomplete="off" spellcheck="false"
+             placeholder="Buscar proyecto por nombre…" disabled>
+      <button id="limpiar" type="button" title="Limpiar búsqueda" aria-label="Limpiar búsqueda">&times;</button>
+    </div>
+    <div id="contador" role="status" aria-live="polite"></div>
+  </div>
+</div>
+
+<main class="contenedor">
+  <div id="secciones"></div>
+
+  <div id="sin-resultados" class="aviso oculto">
+    No hay proyectos que coincidan con la búsqueda.
+  </div>
+
+  <div id="error-carga" class="aviso oculto">
+    <strong id="error-titulo"></strong>
+    <span id="error-detalle"></span>
+  </div>
+</main>
+
+<footer class="principal">
+  <div class="contenedor">
+    Colegio San Carlos · Facilitación Tecnológica
+  </div>
+</footer>
+
+<!--
+  Copia de respaldo de los datos.
+  Sirve sólo para que la página funcione al abrirla con doble clic (protocolo file://),
+  donde el navegador bloquea la lectura de links.json.
+  En GitHub Pages (o cualquier servidor) SIEMPRE se usa links.json, así que la fuente
+  de verdad es ese archivo. Si querés, podés mantener esta copia sincronizada; si no,
+  simplemente ignorala y editá únicamente links.json.
+-->
+<script type="application/json" id="datos-respaldo">
+[
+  { "nombre": "Admisión Inicial",      "nivel": "Inicial",      "url": "PEGAR_LINK_AQUI", "descripcion": "Formulario de admisión para nivel inicial", "estado": "activo" },
+  { "nombre": "Talleres Inicial",      "nivel": "Inicial",      "url": "PEGAR_LINK_AQUI", "descripcion": "Gestión de talleres extracurriculares",    "estado": "activo" },
+  { "nombre": "Admisión Primaria",     "nivel": "Primaria",     "url": "PEGAR_LINK_AQUI", "descripcion": "Formulario de admisión para primaria",     "estado": "activo" },
+  { "nombre": "Comedor Primaria",      "nivel": "Primaria",     "url": "PEGAR_LINK_AQUI", "descripcion": "Gestión del comedor escolar",              "estado": "activo" },
+  { "nombre": "Talleres Primaria",     "nivel": "Primaria",     "url": "PEGAR_LINK_AQUI", "descripcion": "Gestión de talleres extracurriculares",    "estado": "activo" },
+  { "nombre": "Comedor Secundaria",    "nivel": "Secundaria",   "url": "PEGAR_LINK_AQUI", "descripcion": "Gestión del comedor escolar",              "estado": "activo" },
+  { "nombre": "Facturación Comedor",   "nivel": "Herramientas", "url": "PEGAR_LINK_AQUI", "descripcion": "Facturación transversal de comedor",       "estado": "activo" },
+  { "nombre": "Facturación Talleres",  "nivel": "Herramientas", "url": "PEGAR_LINK_AQUI", "descripcion": "Facturación transversal de talleres",      "estado": "activo" }
+]
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  /* =========================================================
+     CONFIGURACIÓN
+     ========================================================= */
+
+  // Fecha de "última actualización".
+  // Dejala vacía ("") para que se calcule sola con la fecha del archivo,
+  // o escribila a mano, por ejemplo: "16/09/2026".
+  var ULTIMA_ACTUALIZACION = "";
+
+  // Orden y nombre visible de cada sección.
+  // La clave se compara con el campo "nivel" del JSON (sin distinguir mayúsculas ni acentos).
+  var SECCIONES = [
+    { clave: "inicial",      titulo: "Inicial" },
+    { clave: "primaria",     titulo: "Primaria" },
+    { clave: "secundaria",   titulo: "Secundaria" },
+    { clave: "herramientas", titulo: "Herramientas / Otros" }
+  ];
+  var SECCION_POR_DEFECTO = "herramientas"; // cualquier nivel desconocido cae acá
+
+  // Estados admitidos: clase CSS + texto de la etiqueta.
+  var ESTADOS = {
+    activo:      { clase: "activo",    texto: "Activo" },
+    "en revision": { clase: "revision", texto: "En revisión" },
+    revision:    { clase: "revision",  texto: "En revisión" },
+    archivado:   { clase: "archivado", texto: "Archivado" }
+  };
+  var ESTADO_POR_DEFECTO = { clase: "revision", texto: "Sin estado" };
+
+  var URL_PENDIENTE = "PEGAR_LINK_AQUI";
+
+  /* =========================================================
+     UTILIDADES
+     ========================================================= */
+
+  var $ = function (sel) { return document.querySelector(sel); };
+
+  function normalizar(texto) {
+    return String(texto == null ? "" : texto)
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")  // saca acentos
+      .trim();
+  }
+
+  function esc(texto) {
+    return String(texto == null ? "" : texto)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function urlSegura(url) {
+    var limpia = String(url == null ? "" : url).trim();
+    if (!limpia || limpia === URL_PENDIENTE) return "";
+    return /^https?:\/\//i.test(limpia) ? limpia : "";
+  }
+
+  function plural(n, sing, plu) { return n === 1 ? sing : plu; }
+
+  /* =========================================================
+     RENDERIZADO
+     ========================================================= */
+
+  var contenedorSecciones = $("#secciones");
+  var inputBusqueda = $("#buscador");
+  var botonLimpiar = $("#limpiar");
+  var contador = $("#contador");
+  var avisoSinResultados = $("#sin-resultados");
+
+  var tarjetas = [];   // { nodo, nombreNormalizado, seccion }
+  var gruposDom = [];  // { detalle, grilla, contadorNodo, visibles, total }
+
+  function crearTarjeta(proyecto) {
+    var nombre = proyecto.nombre || "Sin nombre";
+    var estado = ESTADOS[normalizar(proyecto.estado)] || ESTADO_POR_DEFECTO;
+    var url = urlSegura(proyecto.url);
+
+    var art = document.createElement("article");
+    art.className = "tarjeta";
+
+    var boton = url
+      ? '<a class="abrir" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' +
+          'Abrir <span class="icono" aria-hidden="true">&#8599;</span>' +
+        '</a>'
+      : '<span class="abrir pendiente" title="Todavía no se cargó el link de esta app">Link pendiente</span>';
+
+    art.innerHTML =
+      '<span class="etiqueta ' + estado.clase + '">' + esc(estado.texto) + '</span>' +
+      '<h3>' + esc(nombre) + '</h3>' +
+      '<p>' + esc(proyecto.descripcion || "") + '</p>' +
+      boton;
+
+    return art;
+  }
+
+  function render(proyectos) {
+    contenedorSecciones.innerHTML = "";
+    tarjetas = [];
+    gruposDom = [];
+
+    // Reparto de proyectos por sección, respetando el orden de SECCIONES.
+    var clavesValidas = {};
+    SECCIONES.forEach(function (s) { clavesValidas[s.clave] = []; });
+
+    proyectos.forEach(function (p) {
+      var clave = normalizar(p.nivel);
+      if (!Object.prototype.hasOwnProperty.call(clavesValidas, clave)) {
+        clave = SECCION_POR_DEFECTO;
+      }
+      clavesValidas[clave].push(p);
+    });
+
+    SECCIONES.forEach(function (seccion) {
+      var items = clavesValidas[seccion.clave];
+      if (!items.length) return;   // secciones vacías no se muestran
+
+      var detalle = document.createElement("details");
+      detalle.className = "seccion";
+      detalle.open = true;
+
+      var resumen = document.createElement("summary");
+      resumen.innerHTML =
+        '<span class="flecha" aria-hidden="true"></span>' +
+        '<span>' + esc(seccion.titulo) + '</span>' +
+        '<span class="cuenta">' + items.length + '</span>';
+      detalle.appendChild(resumen);
+
+      var grilla = document.createElement("div");
+      grilla.className = "grilla";
+      detalle.appendChild(grilla);
+
+      var grupo = {
+        detalle: detalle,
+        contadorNodo: resumen.querySelector(".cuenta"),
+        total: items.length,
+        visibles: items.length
+      };
+
+      items.forEach(function (p) {
+        var nodo = crearTarjeta(p);
+        grilla.appendChild(nodo);
+        tarjetas.push({
+          nodo: nodo,
+          nombre: normalizar(p.nombre),
+          grupo: grupo
+        });
+      });
+
+      gruposDom.push(grupo);
+      contenedorSecciones.appendChild(detalle);
+    });
+
+    $("#total-proyectos").textContent =
+      proyectos.length + " " + plural(proyectos.length, "proyecto", "proyectos");
+
+    inputBusqueda.disabled = false;
+    filtrar("");
+  }
+
+  /* =========================================================
+     BÚSQUEDA
+     ========================================================= */
+
+  function filtrar(texto) {
+    var consulta = normalizar(texto);
+
+    gruposDom.forEach(function (g) { g.visibles = 0; });
+
+    var visibles = 0;
+    tarjetas.forEach(function (t) {
+      var coincide = !consulta || t.nombre.indexOf(consulta) !== -1;
+      t.nodo.classList.toggle("oculto", !coincide);
+      if (coincide) {
+        visibles++;
+        t.grupo.visibles++;
+      }
+    });
+
+    gruposDom.forEach(function (g) {
+      g.detalle.classList.toggle("oculto", g.visibles === 0);
+      g.contadorNodo.textContent = consulta ? g.visibles + "/" + g.total : g.total;
+      if (consulta && g.visibles > 0) g.detalle.open = true;
+    });
+
+    avisoSinResultados.classList.toggle("oculto", visibles > 0 || !tarjetas.length);
+    botonLimpiar.classList.toggle("visible", !!consulta);
+
+    contador.textContent = consulta
+      ? visibles + " " + plural(visibles, "resultado", "resultados") + " para “" + texto.trim() + "”"
+      : "";
+  }
+
+  inputBusqueda.addEventListener("input", function () { filtrar(this.value); });
+  inputBusqueda.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && this.value) {
+      this.value = "";
+      filtrar("");
+    }
+  });
+  botonLimpiar.addEventListener("click", function () {
+    inputBusqueda.value = "";
+    filtrar("");
+    inputBusqueda.focus();
+  });
+
+  /* =========================================================
+     FECHA
+     ========================================================= */
+
+  function ponerFecha() {
+    var destino = $("#fecha-actualizacion");
+    if (ULTIMA_ACTUALIZACION) {
+      destino.textContent = ULTIMA_ACTUALIZACION;
+      return;
+    }
+    var fecha = new Date(document.lastModified);
+    destino.textContent = isNaN(fecha.getTime())
+      ? "—"
+      : fecha.toLocaleDateString("es-AR", { day: "2-digit", month: "long", year: "numeric" });
+  }
+
+  /* =========================================================
+     CARGA DE DATOS
+     ========================================================= */
+
+  function datosDeRespaldo() {
+    try {
+      return JSON.parse($("#datos-respaldo").textContent);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  var AVISO_RESPALDO =
+    " Mientras tanto se muestra la copia de respaldo incluida en el HTML, " +
+    "que puede estar desactualizada.";
+
+  function mostrarAviso(titulo, detalle) {
+    $("#error-titulo").textContent = titulo;
+    $("#error-detalle").textContent = detalle || "";
+    $("#error-carga").classList.remove("oculto");
+  }
+
+  function pintar(proyectos) {
+    if (!Array.isArray(proyectos)) return false;
+    render(proyectos);
+    return true;
+  }
+
+  // Un solo lugar para decidir qué hacer cuando links.json no se pudo usar.
+  function alFallar(titulo, detalle) {
+    var respaldo = datosDeRespaldo();
+    if (respaldo && pintar(respaldo)) {
+      mostrarAviso(titulo, (detalle ? detalle + " " : "") + AVISO_RESPALDO.trim());
+    } else {
+      mostrarAviso(titulo, detalle || "");
+    }
+  }
+
+  ponerFecha();
+
+  // Bandera para distinguir "no se pudo bajar el archivo" de "el archivo está mal escrito".
+  var seDescargo = false;
+
+  // El parámetro ?v= evita que el navegador sirva una versión cacheada al editar links.json.
+  fetch("links.json?v=" + Date.now(), { cache: "no-store" })
+    .then(function (r) {
+      if (!r.ok) throw new Error("El servidor respondió HTTP " + r.status + ".");
+      seDescargo = true;
+      return r.text();
+    })
+    .then(function (texto) {
+      var datos;
+      try {
+        datos = JSON.parse(texto);
+      } catch (e) {
+        throw new Error("Error de sintaxis JSON: " + e.message);
+      }
+      if (!pintar(datos)) {
+        throw new Error("El archivo debe contener una lista (un array) de proyectos.");
+      }
+    })
+    .catch(function (err) {
+      if (seDescargo) {
+        // El archivo existe pero tiene un problema: hay que arreglarlo sí o sí.
+        alFallar("links.json se encontró, pero no se pudo leer.", err.message);
+      } else if (location.protocol === "file:") {
+        alFallar(
+          "Estás abriendo la página con doble clic (file://).",
+          "El navegador no permite leer links.json de esta forma; en GitHub Pages se lee sin problema."
+        );
+      } else {
+        alFallar(
+          "No se pudo cargar links.json.",
+          "Verificá que el archivo esté junto a index.html. (" + err.message + ")"
+        );
+      }
+    });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+[
+  {
+    "nombre": "Admisión Inicial",
+    "nivel": "Inicial",
+    "url": "PEGAR_LINK_AQUI",
+    "descripcion": "Formulario de admisión para nivel inicial",
+    "estado": "activo"
+  },
+  {
+    "nombre": "Talleres Inicial",
+    "nivel": "Inicial",
+    "url": "PEGAR_LINK_AQUI",
+    "descripcion": "Gestión de talleres extracurriculares",
+    "estado": "activo"
+  },
+  {
+    "nombre": "Admisión Primaria",
+    "nivel": "Primaria",
+    "url": "PEGAR_LINK_AQUI",
+    "descripcion": "Formulario de admisión para primaria",
+    "estado": "activo"
+  },
+  {
+    "nombre": "Comedor Primaria",
+    "nivel": "Primaria",
+    "url": "PEGAR_LINK_AQUI",
+    "descripcion": "Gestión del comedor escolar",
+    "estado": "activo"
+  },
+  {
+    "nombre": "Talleres Primaria",
+    "nivel": "Primaria",
+    "url": "PEGAR_LINK_AQUI",
+    "descripcion": "Gestión de talleres extracurriculares",
+    "estado": "activo"
+  },
+  {
+    "nombre": "Comedor Secundaria",
+    "nivel": "Secundaria",
+    "url": "PEGAR_LINK_AQUI",
+    "descripcion": "Gestión del comedor escolar",
+    "estado": "activo"
+  },
+  {
+    "nombre": "Facturación Comedor",
+    "nivel": "Herramientas",
+    "url": "PEGAR_LINK_AQUI",
+    "descripcion": "Facturación transversal de comedor",
+    "estado": "activo"
+  },
+  {
+    "nombre": "Facturación Talleres",
+    "nivel": "Herramientas",
+    "url": "PEGAR_LINK_AQUI",
+    "descripcion": "Facturación transversal de talleres",
+    "estado": "activo"
+  }
+]
