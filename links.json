@@ -43,14 +43,14 @@
   },
   {
     "nombre": "Facturación Comedor",
-    "nivel": "Herramientas",
+    "nivel": "General",
     "url": "PEGAR_LINK_AQUI",
     "descripcion": "Facturación transversal de comedor",
     "estado": "activo"
   },
   {
     "nombre": "Facturación Talleres",
-    "nivel": "Herramientas",
+    "nivel": "General",
     "url": "PEGAR_LINK_AQUI",
     "descripcion": "Facturación transversal de talleres",
     "estado": "activo"

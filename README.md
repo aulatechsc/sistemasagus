@@ -31,8 +31,8 @@ Campos:
 
 - **nombre** — título de la tarjeta. Es también lo que filtra el buscador.
 - **nivel** — en qué sección aparece: `Inicial`, `Primaria`, `Secundaria` o
-  `Herramientas`. Cualquier otro valor (`Biblioteca`, `Administración`, …) cae
-  automáticamente en *Herramientas / Otros*, así que no rompe nada.
+  `General`. Cualquier otro valor (`Biblioteca`, `Administración`, …) cae
+  automáticamente en *General*, así que no rompe nada.
 - **url** — el link `/exec`. Si lo dejás vacío o en `PEGAR_LINK_AQUI`, la tarjeta
   se muestra igual con el botón en gris y el texto *Link pendiente*.
 - **descripcion** — una línea corta.
@@ -44,7 +44,7 @@ siempre, y sin coma después del último bloque. Si algo queda mal escrito, la
 página te lo avisa arriba con el error exacto en lugar de quedarse en blanco.
 
 El orden de las secciones es siempre Inicial → Primaria → Secundaria →
-Herramientas / Otros, sin importar el orden del archivo. Dentro de cada sección
+General, sin importar el orden del archivo. Dentro de cada sección
 las tarjetas respetan el orden en que las escribiste. Una sección sin proyectos
 no se muestra.
 

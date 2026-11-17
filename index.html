@@ -386,8 +386,8 @@
   { "nombre": "Comedor Primaria",      "nivel": "Primaria",     "url": "PEGAR_LINK_AQUI", "descripcion": "Gestión del comedor escolar",              "estado": "activo" },
   { "nombre": "Talleres Primaria",     "nivel": "Primaria",     "url": "PEGAR_LINK_AQUI", "descripcion": "Gestión de talleres extracurriculares",    "estado": "activo" },
   { "nombre": "Comedor Secundaria",    "nivel": "Secundaria",   "url": "PEGAR_LINK_AQUI", "descripcion": "Gestión del comedor escolar",              "estado": "activo" },
-  { "nombre": "Facturación Comedor",   "nivel": "Herramientas", "url": "PEGAR_LINK_AQUI", "descripcion": "Facturación transversal de comedor",       "estado": "activo" },
-  { "nombre": "Facturación Talleres",  "nivel": "Herramientas", "url": "PEGAR_LINK_AQUI", "descripcion": "Facturación transversal de talleres",      "estado": "activo" }
+  { "nombre": "Facturación Comedor",   "nivel": "General"     , "url": "PEGAR_LINK_AQUI", "descripcion": "Facturación transversal de comedor",       "estado": "activo" },
+  { "nombre": "Facturación Talleres",  "nivel": "General"     , "url": "PEGAR_LINK_AQUI", "descripcion": "Facturación transversal de talleres",      "estado": "activo" }
 ]
 </script>
 
@@ -410,9 +410,9 @@
     { clave: "inicial",      titulo: "Inicial" },
     { clave: "primaria",     titulo: "Primaria" },
     { clave: "secundaria",   titulo: "Secundaria" },
-    { clave: "herramientas", titulo: "Herramientas / Otros" }
+    { clave: "general",      titulo: "General" }
   ];
-  var SECCION_POR_DEFECTO = "herramientas"; // cualquier nivel desconocido cae acá
+  var SECCION_POR_DEFECTO = "general"; // cualquier nivel desconocido cae acá
 
   // Estados admitidos: clase CSS + texto de la etiqueta.
   var ESTADOS = {
