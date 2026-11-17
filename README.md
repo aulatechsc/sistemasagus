@@ -3,6 +3,8 @@
 Panel estático de una sola página que centraliza el acceso a las aplicaciones
 del colegio (Google Apps Script), agrupadas por nivel educativo.
 
+**En línea: https://sistemas-sancarlos.vercel.app**
+
 Sin frameworks, sin CDN, sin build, sin servidor: son dos archivos.
 
 | Archivo | Para qué sirve |
@@ -48,28 +50,37 @@ General, sin importar el orden del archivo. Dentro de cada sección
 las tarjetas respetan el orden en que las escribiste. Una sección sin proyectos
 no se muestra.
 
-## 2. Publicar en GitHub Pages
+## 2. Publicar los cambios
 
-### Opción A — repo nuevo (lo más simple)
+El sitio vive en Vercel, en el proyecto **sistemas-sancarlos**, y se publica
+desde la rama `main` de este repositorio.
 
-1. Creá un repositorio **público** en GitHub (por ejemplo `dashboard`).
-2. Subí `index.html` y `links.json` a la raíz (*Add file → Upload files*).
-3. En el repo: **Settings → Pages**.
-4. En *Build and deployment*: Source = **Deploy from a branch**,
-   Branch = **main**, carpeta = **/ (root)** → *Save*.
-5. Esperá un minuto. Queda en `https://<usuario>.github.io/<repo>/`.
+### Cómo actualizar
 
-### Opción B — carpeta `/docs` de un repo que ya tenés
+Editás `links.json` (desde GitHub o desde tu compu) y hacés commit a `main`.
 
-1. Creá una carpeta `docs/` y poné adentro `index.html` y `links.json`.
-2. **Settings → Pages** → Branch = **main**, carpeta = **/docs** → *Save*.
-3. Queda en `https://<usuario>.github.io/<repo>/`.
+> **Importante:** hoy el repositorio **no** está conectado a Vercel, así que un
+> push a `main` *no* publica solo. Ese paso hay que darlo una vez:
+>
+> 1. Entrá a https://vercel.com/aula-tech-s-projects/sistemas-sancarlos/settings/git
+> 2. *Connect Git Repository* → elegí `aulatechsc/sistemasagus` → rama `main`.
+>
+> Desde ese momento, cada push a `main` publica solo en un minuto. Mientras
+> tanto, los deploys se disparan a mano desde el panel de Vercel
+> (*Deployments → Redeploy*).
 
-> Los dos archivos tienen que quedar **juntos, en la misma carpeta**: la página
-> busca `links.json` al lado de `index.html`.
+### El logo
 
-Después de editar `links.json`, GitHub Pages tarda hasta un par de minutos en
-actualizar. Si seguís viendo lo viejo, recargá con `Ctrl + F5`.
+Si ponés un archivo **`logo.png`** junto a `index.html`, el encabezado usa el
+isologo real del colegio. Si no está, queda el lockup tipográfico
+(COLEGIO / SAN CARLOS) que imita la marca con tipografía serif. No hay que
+tocar el HTML: el cambio es automático.
+
+### Alternativa: GitHub Pages
+
+Si alguna vez querés publicarlo también en Pages: **Settings → Pages**,
+Source = *Deploy from a branch*, Branch = `main`, carpeta `/ (root)`.
+Los dos archivos tienen que quedar juntos en la misma carpeta.
 
 ## 3. Ajustes rápidos
 
@@ -81,6 +92,18 @@ Todo lo configurable está junto, arriba del `<script>` en `index.html`:
 - **Estados** — `ESTADOS`: colores y etiquetas.
 
 El nombre del colegio y el subtítulo están en el `<header>` del HTML.
+
+**Paleta institucional** (arriba del todo en el `<style>`, como variables CSS):
+
+| Token | Valor | Uso |
+|---|---|---|
+| `--azul` | `#00476C` | Color institucional: títulos, botones, foco |
+| `--rojo` | `#E4051F` | Acento del isologo: filete del encabezado y la marca |
+| `--pizarra` | `#4A6E82` | Gris azulado del recuadro "DIÁLOGOS" |
+
+Los colores de estado (verde / ámbar / gris) son semánticos y van aparte de la
+marca a propósito: el rojo institucional no se usa para "archivado" ni para
+errores, para que no se confunda una cosa con la otra.
 
 ## Nota sobre abrir el archivo con doble clic
 
