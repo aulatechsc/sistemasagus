@@ -400,7 +400,7 @@
   Copia de respaldo de los datos.
   Sirve sólo para que la página funcione al abrirla con doble clic (protocolo file://),
   donde el navegador bloquea la lectura de links.json.
-  En GitHub Pages (o cualquier servidor) SIEMPRE se usa links.json, así que la fuente
+  En el sitio publicado (o cualquier servidor) SIEMPRE se usa links.json, así que la fuente
   de verdad es ese archivo. Si querés, podés mantener esta copia sincronizada; si no,
   simplemente ignorala y editá únicamente links.json.
 -->
@@ -711,7 +711,7 @@
       } else if (location.protocol === "file:") {
         alFallar(
           "Estás abriendo la página con doble clic (file://).",
-          "El navegador no permite leer links.json de esta forma; en GitHub Pages se lee sin problema."
+          "El navegador no permite leer links.json de esta forma; en el sitio publicado se lee sin problema."
         );
       } else {
         alFallar(
